@@ -10,16 +10,6 @@ class Loader
     {
         $this->vars = get_object_vars($obj);
     }
-    
-/**
- * useless in autoloader
- *
-    public function model($modelname)
-    {
-        $modelsdir = $GLOBALS['env']['dir']['models'].'/'.$modelname.'.php';
-        require $modelsdir;
-    }
-*/
 
     /**
      * Load helper
@@ -32,8 +22,10 @@ class Loader
 
     public function view($name, $data = [])
     {
-        foreach ($data as $key => $value) {
-            $$key = $value;
+        if(array_keys($data) !== range(0, count($data) - 1)){
+            foreach ($data as $key => $value) {
+                $$key = $value;
+            }
         }
         
         $pagesdir = $GLOBALS['env']['dir']['pages'];

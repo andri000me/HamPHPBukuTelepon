@@ -8,16 +8,6 @@ use System\Loader;
 use System\Controller;
 use System\ErrorHandler;
 
-/*require_once 'session.php';
-require_once 'error_handler.php';
-require_once 'url.php';
-require_once 'request.php';
-require_once 'loader.php';
-require_once 'database.php';
-
-require_once 'controller.php';
-require_once 'model.php';*/
-
 /**
  * Autoloader.
  */
@@ -54,20 +44,16 @@ function phperrorlinter($errno, $errstr, $errfile, $errline)
     $load->view(
         'error/error',
         array(
-            'error_name'    => $error_name,
+            'error_name'       => $error_name,
             'error_message'    => $error->get($error_name)
         )
     );
 }
 
 // Menampilkan basepath
-function basepath($path, $type = 'css')
+function basepath($path)
 {
-    if ($type == 'css') {
-        echo $GLOBALS['env']['dir']['views'].'/'.$path;
-    } elseif ($type == 'js') {
-        echo $GLOBALS['env']['dir']['views'].'/'.$path;
-    }
+    echo '/'.$GLOBALS['env']['dir']['views'].'/'.$path;
 }
 
 // Pengecekan apakah proyek dalam mode produksi atau tidak

@@ -1,19 +1,30 @@
 <div class="container">
-	<div class="alert alert-success">
-		Aplikasi Anda berhasil berjalan di <b><i><?php echo $GLOBALS['env']['host']['root']; ?></i></b>.
-	</div>
-	<div class="jumbotron">
-		<h1>Selamat Datang di HamPHP</h1><hr/>
-		<p>
-			Aplikasi anda berjalan di <b><i><?php echo $GLOBALS['env']['host']['root']; ?></i></b>,
-			Anda dapat mengubah tampilan ini pada <b><i><?php echo $GLOBALS['env']['dir']['pages']; ?>/home/home.php</b></i>
-		</p>
-		<p>
-			Penggunaan lebih lanjut, silakan baca <a href="https://github.com/robisemicolon/HamPHP.git">dokumentasi</a>
-		</p>
-		<hr/>
-		<p>
-			<pre>&copy; 2017 Hadi Hidayat Hammurabi</pre>
-		</p>
-	</div>
+
+	<h1>Buku Telepon</h1>
+
+	<a href="/home/tambah"><button class="btn btn-primary">Tambah</button></a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nomor</th>
+				<th>Nama</th>
+				<th>Nomor HP</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php for($i=0;$i<count($data); ++$i): ?>
+			<tr>
+				<td><?php echo $i+1; ?></td>
+				<td><?php echo $data[$i]['nama']; ?></td>
+				<td><?php echo $data[$i]['nohp']; ?></td>
+				<td>
+					<a href="/home/edit/<?php echo $data[$i]['id'];?>"><button class="btn btn-success">Edit</button></a>
+					<a href="/home/delete/<?php echo $data[$i]['id'];?>"><button class="btn btn-danger">Hapus</button></a>
+				</td>
+			</tr>
+		<?php endfor; ?>
+		</tbody>
+	</table>
 </div>
