@@ -24,18 +24,29 @@
 <script>
 	var setRow = (data)=>{
 		var tbodycontent = '';
-		for(var i=0;i<data.length;++i){
-			tbodycontent += '<tr>'
-			tbodycontent += '<td>'+(i+1)+'</td>'
-			tbodycontent += '<td>'+data[i].nama+'</td>'
-			tbodycontent += '<td>'+data[i].nohp+'</td>'
-			tbodycontent += `<td>
-								<button class="btn btn-success" onclick="editpage(${data[i].id})">Edit</button>
-								<button class="btn btn-danger" onclick="hapus(${data[i].id})">Hapus</button>
-							</td>`
-			tbodycontent += '</tr>'
+		if(data.length <= 0){
+			$('thead').addClass('hidden-sm-up hidden-md-up hidden-lg-up')
+			$('#home').html($('#home').html()+'<h4 class="text-center text-danger" id="alertkosong">Kontak Kosong</h4>')
+			$('tbody').html('')
 		}
-		$('tbody').html(tbodycontent)
+		else{
+			$('thead').removeClass('hidden-sm-up')
+			$('thead').removeClass('hidden-md-up')
+			$('thead').removeClass('hidden-lg-up')
+			$('#alertkosong').remove()
+			for(var i=0;i<data.length;++i){
+				tbodycontent += '<tr>'
+				tbodycontent += '<td>'+(i+1)+'</td>'
+				tbodycontent += '<td>'+data[i].nama+'</td>'
+				tbodycontent += '<td>'+data[i].nohp+'</td>'
+				tbodycontent += `<td>
+									<button class="btn btn-success" onclick="editpage(${data[i].id})">Edit</button>
+									<button class="btn btn-danger" onclick="hapus(${data[i].id})">Hapus</button>
+								</td>`
+				tbodycontent += '</tr>'
+			}
+			$('tbody').html(tbodycontent)
+		}
 	}
 	var getData = () => {
 		$.ajax({
