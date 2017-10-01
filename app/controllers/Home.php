@@ -24,32 +24,29 @@ class Home extends Controller
         $this->load->view('footer');
     }
 
+    function getKontaks(){
+        $kontaks = $this->homemodel->getKontaks();
+        echo json_encode($kontaks);
+    }
+
     function tambah(){
-        $this->load->view('header',['pagetitle'=>'Tambah - Buku Telepon']);
         $this->load->view('home/tambah');
-        $this->load->view('footer');
     }
 
     function tambahsave(){
-        $this->homemodel->tambahsave($_POST);
-        header('Location: /');
+        $this->homemodel->tambahsave($_GET);
     }
 
     function edit($id){
         $kontak = $this->homemodel->getKontak($id);
-
-        $this->load->view('header',['pagetitle'=>'Edit '.$id.' - Buku Telepon']);
         $this->load->view('home/edit',$kontak);
-        $this->load->view('footer');
     }
 
     function editsave(){
-        $this->homemodel->editsave($_POST);
-        header('Location: /');
+        $this->homemodel->editsave($_GET);
     }
 
     function delete($id){
         $this->homemodel->delete($id);
-        header('Location: /');
     }
 }

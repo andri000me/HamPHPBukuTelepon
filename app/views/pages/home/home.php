@@ -1,30 +1,81 @@
 <div class="container">
+	<div id="home">
+		<h1>Buku Telepon</h1>
 
-	<h1>Buku Telepon</h1>
+		<button class="btn btn-primary" onclick="tambahpage()">Tambah</button>
 
-	<a href="/home/tambah"><button class="btn btn-primary">Tambah</button></a>
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Nomor</th>
-				<th>Nama</th>
-				<th>Nomor HP</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php for($i=0;$i<count($data); ++$i): ?>
-			<tr>
-				<td><?php echo $i+1; ?></td>
-				<td><?php echo $data[$i]['nama']; ?></td>
-				<td><?php echo $data[$i]['nohp']; ?></td>
-				<td>
-					<a href="/home/edit/<?php echo $data[$i]['id'];?>"><button class="btn btn-success">Edit</button></a>
-					<a href="/home/delete/<?php echo $data[$i]['id'];?>"><button class="btn btn-danger">Hapus</button></a>
-				</td>
-			</tr>
-		<?php endfor; ?>
-		</tbody>
-	</table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nomor</th>
+					<th>Nama</th>
+					<th>Nomor HP</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div id="tambah"></div>
+	<div id="edit"></div>
 </div>
+
+<script>
+	var setRow = (data)=>{
+		var tbodycontent = '';
+		for(var i=0;i<data.length;++i){
+			tbodycontent += '<tr>'
+			tbodycontent += '<td>'+(i+1)+'</td>'
+			tbodycontent += '<td>'+data[i].nama+'</td>'
+			tbodycontent += '<td>'+data[i].nohp+'</td>'
+			tbodycontent += `<td>
+								<button class="btn btn-success" onclick="editpage(${data[i].id})">Edit</button>
+								<button class="btn btn-danger" onclick="hapus(${data[i].id})">Hapus</button>
+							</td>`
+			tbodycontent += '</tr>'
+		}
+		$('tbody').html(tbodycontent)
+	}
+	var getData = () => {
+		$.ajax({
+			url:'/home/getkontaks',
+		})
+		.done((kontaks)=>{
+			setRow(JSON.parse(kontaks))
+		})
+	}
+	getData()
+	var tambahpage = () => {
+		$('#home').addClass('hidden-sm-up hidden-md-up hidden-lg-up')
+		$('#tambah').removeClass('hidden-sm-up')
+		$('#tambah').removeClass('hidden-md-up')
+		$('#tambah').removeClass('hidden-lg-up')
+		$.ajax({
+			url:'/home/tambah/',
+		})
+		.done((data)=>{
+			$('#tambah').html(data)
+		})
+	}
+	var editpage = (id) => {
+		$('#home').addClass('hidden-sm-up hidden-md-up hidden-lg-up')
+		$('#edit').removeClass('hidden-sm-up')
+		$('#edit').removeClass('hidden-md-up')
+		$('#edit').removeClass('hidden-lg-up')
+		$.ajax({
+			url:'/home/edit/'+id,
+		})
+		.done((data)=>{
+			$('#edit').html(data)
+		})
+	}
+	var hapus = (id) => {
+		$.ajax({
+			url:'/home/delete/'+id,
+		})
+		.done(()=>{
+			getData()
+		})
+	}
+</script>
