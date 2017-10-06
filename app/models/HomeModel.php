@@ -17,10 +17,11 @@ class HomeModel extends Model
     }
 
     function tambahsave($data){
-    	$this->db->query("INSERT INTO kontaks VALUES (null, '{$data['nama']}', '{$data['nohp']}')");
+    	$this->db->query("INSERT INTO kontaks(nama,nohp) VALUES ('{$data['nama']}', '{$data['nohp']}')");
     }
 
     function editsave($data){
+        echo "UPDATE kontaks SET nama='{$data['nama']}', nohp='{$data['nohp']}' WHERE id={$data['id']}";
     	$this->db->query("UPDATE kontaks SET nama='{$data['nama']}', nohp='{$data['nohp']}' WHERE id={$data['id']}");
     }
 
